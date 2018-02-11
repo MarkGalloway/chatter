@@ -7,6 +7,7 @@
     "serve": "node src/index.js",
     "start": "nodemon --legacy-watch --ignore node_modules/ src/index.js",
     "precommit": "lint-staged",
+    "lint": "eslint src/"
   },
   "author": "Mark Galloway <mark.galloway@ualberta.ca>",
   "license": "MIT",
@@ -34,6 +35,16 @@
     "koa-router": "^7.4.0"
   },
   "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-standard": "^3.0.1",
     "husky": "^0.14.3",
     "lint-staged": "^6.1.0",
     "nodemon": "^1.14.12",
