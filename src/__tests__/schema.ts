@@ -1,6 +1,6 @@
-const request = require('supertest');
+import request from 'supertest';
 
-const App = require('../app');
+import App from '../app';
 
 let server;
 

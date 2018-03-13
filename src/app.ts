@@ -1,11 +1,11 @@
-const Koa = require('koa');
-const Router = require('koa-router');
-const bodyParser = require('koa-bodyparser');
-const { graphqlKoa, graphiqlKoa } = require('apollo-server-koa');
+import { graphiqlKoa, graphqlKoa } from 'apollo-server-koa';
+import Koa from 'koa';
+import bodyParser from 'koa-bodyparser';
+import Router from 'koa-router';
 
-const schema = require('./schema');
+import schema from './schema';
 
-function App(context = {}, ...middlewares) {
+function App(context = {}, ...middlewares: any[]) {
   const app = new Koa();
 
   middlewares.forEach(middleware => app.use(middleware));
@@ -28,4 +28,4 @@ function App(context = {}, ...middlewares) {
   return app;
 }
 
-module.exports = App;
+export default App;

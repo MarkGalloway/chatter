@@ -1,4 +1,4 @@
-const { makeExecutableSchema } = require('graphql-tools');
+import { makeExecutableSchema } from 'graphql-tools';
 
 const typeDefs = [
   `
@@ -14,4 +14,4 @@ const resolvers = {
   },
 };
 
-module.exports = makeExecutableSchema({ typeDefs, resolvers });
+export default makeExecutableSchema({ typeDefs, resolvers });

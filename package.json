@@ -1,14 +1,18 @@
 {
   "name": "chatter",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "The worlds worst social network",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch",
-    "serve": "node src/index.js",
-    "start": "nodemon --legacy-watch --ignore node_modules/ src/index.js",
+    "build:ts": "tsc",
+    "build": "npm run build:ts && npm run tslint",
+    "lint": "eslint src/",
     "precommit": "lint-staged",
-    "lint": "eslint src/"
+    "serve": "node dist/index.js",
+    "test": "jest --watch src/",
+    "watch:node": "nodemon --legacy-watch --ignore node_modules/ dist/index.js",
+    "watch:ts": "tsc -w",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch:ts\" \"npm run watch:node\""
   },
   "author": "Mark Galloway <mark.galloway@ualberta.ca>",
   "license": "MIT",
@@ -32,6 +36,18 @@
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
       "/node_modules/"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
     ]
   },
   "dependencies": {
@@ -43,21 +59,21 @@
     "koa-router": "^7.4.0"
   },
   "devDependencies": {
-    "eslint": "^4.17.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-config-standard": "^11.0.0-beta.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jest": "^21.8.0",
-    "eslint-plugin-node": "^6.0.0",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-security": "^1.4.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "@types/jest": "^22.2.0",
+    "@types/koa": "^2.0.44",
+    "@types/koa-bodyparser": "^4.2.0",
+    "@types/koa-router": "^7.0.27",
+    "@types/supertest": "^2.0.4",
+    "concurrently": "^3.5.1",
     "husky": "^0.14.3",
-    "jest": "^22.2.2",
+    "jest": "^22.4.1",
     "lint-staged": "^6.1.0",
     "nodemon": "^1.14.12",
     "prettier": "^1.10.2",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "ts-jest": "^22.4.1",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.10.0",
+    "typescript": "^2.7.2"
   }
 }
