@@ -4,7 +4,7 @@
   "description": "The worlds worst social network",
   "main": "index.js",
   "scripts": {
-    "build:ts": "tsc",
+    "build:ts": "tsc || true",
     "build": "npm run build:ts && npm run tslint",
     "lint": "eslint src/",
     "precommit": "lint-staged",
