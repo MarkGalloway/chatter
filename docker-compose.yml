@@ -15,8 +15,11 @@ services:
       PORT: 3000
       HOST: '0.0.0.0'
       DATABASE_URL: postgresql://postgres@db:5432/postgres
+      TEST_DATABASE_URL: postgresql://postgres@db:5432/test
   db:
     image: postgres:9.6
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d # Create test DB
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
