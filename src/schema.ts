@@ -1,3 +1,4 @@
+import { GraphQLCompositeType } from 'graphql';
 import { makeExecutableSchema } from 'graphql-tools';
 
 const typeDefs = [
@@ -10,7 +11,7 @@ type Query {
 
 const resolvers = {
   Query: {
-    hello: (root, args, context) => 'Hello World.',
+    hello: (root: any, args: object, context: object) => 'Hello World.',
   },
 };
 

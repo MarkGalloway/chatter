@@ -1,12 +1,12 @@
 import { graphiqlKoa, graphqlKoa } from 'apollo-server-koa';
-import Koa from 'koa';
+import Application from 'koa';
 import bodyParser from 'koa-bodyparser';
 import Router from 'koa-router';
 
 import schema from './schema';
 
-function App(context = {}, ...middlewares: any[]) {
-  const app = new Koa();
+function App(context = {}, ...middlewares: Application.Middleware[]) {
+  const app = new Application();
 
   middlewares.forEach(middleware => app.use(middleware));
 

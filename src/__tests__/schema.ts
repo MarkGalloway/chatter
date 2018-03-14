@@ -1,12 +1,12 @@
+import Application from 'koa';
 import request from 'supertest';
 
 import App from '../app';
 
-let server;
+let app: Application;
 
 beforeAll(() => {
-  const app = new App();
-  server = app.callback();
+  app = App();
 });
 
 it('Should say hello', async () => {
@@ -17,7 +17,7 @@ it('Should say hello', async () => {
       hello
     }`;
 
-  const response = await request(server)
+  const response = await request(app.callback())
     .post('/graphql')
     .send({ query });
 
