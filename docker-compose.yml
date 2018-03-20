@@ -19,7 +19,7 @@ services:
   db:
     image: postgres:9.6
     volumes:
-      - ./sql:/docker-entrypoint-initdb.d # Create test DB
+      - ./scripts/sql:/docker-entrypoint-initdb.d # Create test DB
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
