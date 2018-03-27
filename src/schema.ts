@@ -5,6 +5,20 @@ import moment from 'moment';
 
 const typeDefs = [
   `
+enum TopicStatus {
+  Visible
+  Archived
+}
+
+type Topic {
+  id: ID!
+  author: String!  # TODO: Expand when user is implemented
+  body: String!
+  status: TopicStatus!
+  created_date: Date!
+  updated_date: Date
+}
+
 type Query {
   hello: String!
 }
