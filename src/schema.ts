@@ -2,13 +2,15 @@ import { GraphQLScalarType, Kind } from 'graphql';
 import { makeExecutableSchema } from 'graphql-tools';
 import moment from 'moment';
 
+import * as models from './models';
+
 const typeDefs = [
   `
 scalar Date
 
 enum TopicStatus {
-  Visible
-  Archived
+  ${models.TopicStatus.VISIBLE}
+  ${models.TopicStatus.ARCHIVED}
 }
 
 type Topic {
@@ -16,8 +18,8 @@ type Topic {
   author: String!  # TODO: Expand when user is implemented
   body: String!
   status: TopicStatus!
-  created_date: Date!
-  updated_date: Date
+  createdDate: Date!
+  updatedDate: Date
 }
 
 type Query {
