@@ -2,9 +2,7 @@ import App from './app';
 import { DATABASE_URL, HOST, PORT } from './config';
 import Database from './db';
 
-const context = {
-  db: Database(DATABASE_URL),
-};
+const context = {};
 
 const app = App(context);
 

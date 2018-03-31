@@ -1,10 +1,4 @@
 import Knex from 'knex';
+import DatabaseConfig from '../knexfile';
 
-function connect(databaseUrl: string): Knex {
-  return Knex({
-    client: 'pg',
-    connection: databaseUrl,
-  });
-}
-
-export default connect;
+export default Knex(DatabaseConfig);
