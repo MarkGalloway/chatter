@@ -1,10 +1,11 @@
-import { GraphQLScalarType } from 'graphql';
+import { GraphQLScalarType, Kind } from 'graphql';
 import { makeExecutableSchema } from 'graphql-tools';
-import { Kind } from 'graphql/language';
 import moment from 'moment';
 
 const typeDefs = [
   `
+scalar Date
+
 enum TopicStatus {
   Visible
   Archived
@@ -27,8 +28,8 @@ type Query {
 
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: 'Date',
     description: 'Date',
+    name: 'Date',
     parseValue(value) {
       return moment(value).toDate();
     },
