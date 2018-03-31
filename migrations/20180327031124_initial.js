@@ -13,12 +13,12 @@ exports.up = function(knex, Promise) {
       .defaultTo('visible');
 
     table
-      .timestamp('created_date')
+      .timestamp('createdDate')
       .notNullable()
       .defaultTo(knex.fn.now());
 
     table
-      .timestamp('updated_date')
+      .timestamp('updatedDate')
       .notNullable()
       .defaultTo(knex.fn.now());
 
