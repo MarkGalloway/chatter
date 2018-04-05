@@ -1,3 +1,5 @@
+jest.mock('../../db');
+
 import knex from '../../db';
 
 import { ITopicData, Topic } from '../topic';
