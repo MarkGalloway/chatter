@@ -5,7 +5,7 @@ export enum TopicStatus {
   ARCHIVED = 'Archived',
 }
 
-interface ITopicData {
+export interface ITopicData {
   id: number;
   author: string;
   body: string;
