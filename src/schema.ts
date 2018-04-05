@@ -24,14 +24,15 @@ type Topic {
 
 type Query {
   hello: String!
+  topic(id: ID!): Topic
 }
 `,
 ];
 
 const resolvers = {
   Date: new GraphQLScalarType({
-    description: 'Date',
     name: 'Date',
+    description: 'Date',
     parseValue(value) {
       return moment(value).toDate();
     },
@@ -49,6 +50,8 @@ const resolvers = {
   }),
   Query: {
     hello: (root: any, args: object, context: object) => 'Hello World.',
+    topic: (root: any, args: { id: string }, context: object) =>
+      models.Topic.getOne(context, args.id),
   },
 };
 

@@ -15,7 +15,7 @@ export interface ITopicData {
 }
 
 export class Topic implements ITopicData {
-  public static async getOne(context: any, id: number) {
+  public static async getOne(context: any, id: string | number) {
     const results = await knex('topics').where('id', id);
     return results[0] ? new Topic(results[0]) : null;
   }
