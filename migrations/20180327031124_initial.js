@@ -1,13 +1,38 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
+    knex.schema.createTable('users', table => {
+      table.increments('id').primary();
+
+      table.text('firstName');
+      table.text('lastName');
+
+      table
+        .enu('status', ['active', 'archived'])
+        .notNullable()
+        .defaultTo('active');
+
+      table
+        .timestamp('createdDate')
+        .notNullable()
+        .defaultTo(knex.fn.now());
+
+      table
+        .timestamp('updatedDate')
+        .notNullable()
+        .defaultTo(knex.fn.now());
+
+      table.index(['status']);
+    }),
     knex.schema.createTable('topics', table => {
       table.increments('id').primary();
 
       // TODO: FK
       table
-        .integer('author')
+        .integer('authorId')
         .unsigned()
-        .notNullable();
+        .notNullable()
+        .references('users.id')
+        .onDelete('CASCADE');
 
       table.text('body').notNullable();
 
@@ -26,22 +51,25 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .defaultTo(knex.fn.now());
 
-      table.index(['status', 'author']);
+      table.index(['status', 'authorId']);
     }),
     knex.schema.createTable('replies', table => {
       table.increments('id').primary();
 
       // TODO: FK
       table
-        .integer('author')
+        .integer('authorId')
         .unsigned()
-        .notNullable();
+        .notNullable()
+        .references('users.id')
+        .onDelete('CASCADE');
 
       table
-        .integer('topic_id')
-        .references('topics.id')
+        .integer('topicId')
         .unsigned()
-        .notNullable();
+        .notNullable()
+        .references('topics.id')
+        .onDelete('CASCADE');
 
       table.text('body').notNullable();
 
@@ -60,11 +88,14 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .defaultTo(knex.fn.now());
 
-      table.index(['status', 'author', 'topic_id']);
+      table.index(['status', 'authorId', 'topicId']);
     }),
   ]);
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('topics').dropTableIfExists('replies');
+  return knex.schema
+    .dropTableIfExists('topics')
+    .dropTableIfExists('replies')
+    .dropTableIfExists('users');
 };
