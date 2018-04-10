@@ -7,7 +7,7 @@ export enum TopicStatus {
 
 export interface ITopicData {
   id: number;
-  author: string;
+  authorId: number;
   body: string;
   status: TopicStatus;
   createdDate: Date;
@@ -21,7 +21,7 @@ export class Topic implements ITopicData {
   }
 
   public id: number;
-  public author: string;
+  public authorId: number;
   public body: string;
   public status: TopicStatus;
   public createdDate: Date;
@@ -31,7 +31,7 @@ export class Topic implements ITopicData {
 
   constructor(data: ITopicData) {
     this.id = data.id;
-    this.author = data.author;
+    this.authorId = data.authorId;
     this.body = data.body;
     this.status = data.status;
     this.createdDate = data.createdDate;

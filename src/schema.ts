@@ -15,7 +15,8 @@ enum TopicStatus {
 
 type Topic {
   id: ID!
-  author: String!  # TODO: Expand when user is implemented
+  authorId: ID!
+  # author: Author # TODO: Expand when user is implemented
   body: String!
   status: TopicStatus!
   createdDate: Date!

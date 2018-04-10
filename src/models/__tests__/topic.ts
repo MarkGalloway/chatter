@@ -9,22 +9,33 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  await knex('users').del();
   await knex('topics').del();
   await knex.destroy();
 });
 
+const USER_FIXTURE = {
+  firstName: 'Cookie',
+  lastName: 'Monster',
+};
+
 const TOPIC_FIXTURE = {
-  author: 1,
   body: 'Where can find cookie?',
 };
 
+let userIds: number[];
 let topicIds: number[];
 
 beforeEach(async () => {
+  await knex('users').del();
   await knex('topics').del();
 
+  userIds = await knex('users')
+    .insert([USER_FIXTURE])
+    .returning('id');
+
   topicIds = await knex('topics')
-    .insert([TOPIC_FIXTURE])
+    .insert([{ ...TOPIC_FIXTURE, authorId: userIds[0] }])
     .returning('id');
 });
 
@@ -35,7 +46,7 @@ describe('Topic', () => {
     const notification = new Topic(data);
 
     expect(notification).toHaveProperty('id', data.id);
-    expect(notification).toHaveProperty('author', data.author);
+    expect(notification).toHaveProperty('author_id', data.author_id);
     expect(notification).toHaveProperty('status', data.status);
     expect(notification).toHaveProperty('createdDate', data.createdDate);
     expect(notification).toHaveProperty('updatedDate', data.updatedDate);
