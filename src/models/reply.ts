@@ -17,8 +17,9 @@ export interface IReplyData {
 
 export class Reply implements IReplyData {
   public static async getOne(context: any, id: string | number) {
-    const results = await knex('replies').where('id', id);
-    return results[0] ? new this(results[0]) : null;
+    const results = await buildQuery({ id });
+    return results[0] ? new Reply(results[0]) : null;
+  }
   }
 
   public id: number;
@@ -42,3 +43,22 @@ export class Reply implements IReplyData {
     this.data = data;
   }
 }
+
+export interface IReplyFilter {
+  id?: number | string;
+  topicId?: number;
+}
+
+const buildQuery = (filters: IReplyFilter = {}) => {
+  let query = knex('replies');
+
+  if (filters.id !== undefined) {
+    query = query.where('id', filters.id);
+  }
+
+  if (filters.topicId !== undefined) {
+    query = query.where('topicId', filters.topicId);
+  }
+
+  return query;
+};
