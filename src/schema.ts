@@ -23,9 +23,26 @@ type Topic {
   updatedDate: Date
 }
 
+enum ReplyStatus {
+  ${models.ReplyStatus.VISIBLE}
+  ${models.ReplyStatus.ARCHIVED}
+}
+
+type Reply {
+  id: ID!
+  authorId: ID!
+  # author: Author # TODO: Expand when user is implemented
+  topicId: ID!
+  body: String!
+  status: TopicStatus!
+  createdDate: Date!
+  updatedDate: Date
+}
+
 type Query {
   hello: String!
   topic(id: ID!): Topic
+  reply(id: ID!): Reply
 }
 `,
 ];
@@ -50,9 +67,11 @@ const resolvers = {
     },
   }),
   Query: {
-    hello: (root: any, args: object, context: object) => 'Hello World.',
-    topic: (root: any, args: { id: string }, context: object) =>
+    hello: (root: any, args: object, context: any) => 'Hello World.',
+    topic: (root: any, args: { id: string }, context: any) =>
       models.Topic.getOne(context, args.id),
+    reply: (root: any, args: { id: string }, context: any) =>
+      models.Reply.getOne(context, args.id),
   },
 };
 
