@@ -20,6 +20,10 @@ export class Reply implements IReplyData {
     const results = await buildQuery({ id });
     return results[0] ? new Reply(results[0]) : null;
   }
+
+  public static async getMany(context: any, filter: IReplyFilter) {
+    const results = await buildQuery(filter);
+    return results.map((data: IReplyData) => new Reply(data));
   }
 
   public id: number;

@@ -21,6 +21,7 @@ type Topic {
   status: TopicStatus!
   createdDate: Date!
   updatedDate: Date
+  replies: [Reply]!
 }
 
 enum ReplyStatus {
@@ -72,6 +73,10 @@ const resolvers = {
       models.Topic.getOne(context, args.id),
     reply: (root: any, args: { id: string }, context: any) =>
       models.Reply.getOne(context, args.id),
+  },
+  Topic: {
+    replies: (root: models.Reply, args: {}, context: any) =>
+      models.Reply.getMany(context, { topicId: root.id }),
   },
 };
 
