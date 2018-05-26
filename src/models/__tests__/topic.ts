@@ -46,7 +46,7 @@ describe('Topic', () => {
     const notification = new Topic(data);
 
     expect(notification).toHaveProperty('id', data.id);
-    expect(notification).toHaveProperty('author_id', data.author_id);
+    expect(notification).toHaveProperty('authorId', data.authorId);
     expect(notification).toHaveProperty('status', data.status);
     expect(notification).toHaveProperty('createdDate', data.createdDate);
     expect(notification).toHaveProperty('updatedDate', data.updatedDate);
