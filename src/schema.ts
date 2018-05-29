@@ -40,6 +40,7 @@ type Reply {
   authorId: ID!
   author: Author
   topicId: ID!
+  topic: Topic!
   body: String!
   status: TopicStatus!
   createdDate: Date!
@@ -92,6 +93,8 @@ const resolvers = {
   Reply: {
     author: (root: models.Reply, args: {}, context: any) =>
       models.User.getOne(context, root.authorId),
+    topic: (root: models.Reply, args: { id: string }, context: any) =>
+      models.Topic.getOne(context, args.id),
   },
 };
 
