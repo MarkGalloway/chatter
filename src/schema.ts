@@ -84,7 +84,7 @@ const resolvers = {
       models.Reply.getOne(context, args.id),
   },
   Topic: {
-    replies: (root: models.Reply, args: {}, context: any) =>
+    replies: (root: models.Topic, args: {}, context: any) =>
       models.Reply.getMany(context, { topicId: root.id }),
     author: (root: models.Topic, args: {}, context: any) =>
       models.User.getOne(context, root.authorId),
