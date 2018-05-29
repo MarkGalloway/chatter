@@ -8,6 +8,12 @@ const typeDefs = [
   `
 scalar Date
 
+type Author {
+  id: ID!
+  firstName: String
+  lastName: String
+}
+
 enum TopicStatus {
   ${models.TopicStatus.VISIBLE}
   ${models.TopicStatus.ARCHIVED}
@@ -42,6 +48,7 @@ type Reply {
 
 type Query {
   hello: String!
+  author(id: ID!): Author
   topic(id: ID!): Topic
   reply(id: ID!): Reply
 }
@@ -69,6 +76,8 @@ const resolvers = {
   }),
   Query: {
     hello: (root: any, args: object, context: any) => 'Hello World.',
+    author: (root: any, args: { id: string }, context: any) =>
+      models.User.getOne(context, args.id),
     topic: (root: any, args: { id: string }, context: any) =>
       models.Topic.getOne(context, args.id),
     reply: (root: any, args: { id: string }, context: any) =>
