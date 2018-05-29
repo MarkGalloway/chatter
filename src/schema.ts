@@ -8,6 +8,12 @@ const typeDefs = [
   `
 scalar Date
 
+type Author {
+  id: ID!
+  firstName: String
+  lastName: String
+}
+
 enum TopicStatus {
   ${models.TopicStatus.VISIBLE}
   ${models.TopicStatus.ARCHIVED}
@@ -16,7 +22,7 @@ enum TopicStatus {
 type Topic {
   id: ID!
   authorId: ID!
-  # author: Author # TODO: Expand when user is implemented
+  author: Author
   body: String!
   status: TopicStatus!
   createdDate: Date!
@@ -32,8 +38,9 @@ enum ReplyStatus {
 type Reply {
   id: ID!
   authorId: ID!
-  # author: Author # TODO: Expand when user is implemented
+  author: Author
   topicId: ID!
+  topic: Topic!
   body: String!
   status: TopicStatus!
   createdDate: Date!
@@ -42,6 +49,7 @@ type Reply {
 
 type Query {
   hello: String!
+  author(id: ID!): Author
   topic(id: ID!): Topic
   reply(id: ID!): Reply
 }
@@ -69,14 +77,24 @@ const resolvers = {
   }),
   Query: {
     hello: (root: any, args: object, context: any) => 'Hello World.',
+    author: (root: any, args: { id: string }, context: any) =>
+      models.User.getOne(context, args.id),
     topic: (root: any, args: { id: string }, context: any) =>
       models.Topic.getOne(context, args.id),
     reply: (root: any, args: { id: string }, context: any) =>
       models.Reply.getOne(context, args.id),
   },
   Topic: {
-    replies: (root: models.Reply, args: {}, context: any) =>
+    replies: (root: models.Topic, args: {}, context: any) =>
       models.Reply.getMany(context, { topicId: root.id }),
+    author: (root: models.Topic, args: {}, context: any) =>
+      models.User.getOne(context, root.authorId),
+  },
+  Reply: {
+    author: (root: models.Reply, args: {}, context: any) =>
+      models.User.getOne(context, root.authorId),
+    topic: (root: models.Reply, args: { id: string }, context: any) =>
+      models.Topic.getOne(context, args.id),
   },
 };
 
