@@ -22,7 +22,7 @@ enum TopicStatus {
 type Topic {
   id: ID!
   authorId: ID!
-  # author: Author # TODO: Expand when user is implemented
+  author: Author
   body: String!
   status: TopicStatus!
   createdDate: Date!
@@ -38,7 +38,7 @@ enum ReplyStatus {
 type Reply {
   id: ID!
   authorId: ID!
-  # author: Author # TODO: Expand when user is implemented
+  author: Author
   topicId: ID!
   body: String!
   status: TopicStatus!
@@ -86,6 +86,12 @@ const resolvers = {
   Topic: {
     replies: (root: models.Reply, args: {}, context: any) =>
       models.Reply.getMany(context, { topicId: root.id }),
+    author: (root: models.Topic, args: {}, context: any) =>
+      models.User.getOne(context, root.authorId),
+  },
+  Reply: {
+    author: (root: models.Reply, args: {}, context: any) =>
+      models.User.getOne(context, root.authorId),
   },
 };
 
