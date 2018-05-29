@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
       table.text('lastName');
 
       table
-        .enu('status', ['active', 'archived'])
+        .enu('status', ['active', 'archived', 'disabled'])
         .notNullable()
         .defaultTo('active');
 
@@ -26,7 +26,6 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('topics', table => {
       table.increments('id').primary();
 
-      // TODO: FK
       table
         .integer('authorId')
         .unsigned()
@@ -56,7 +55,6 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('replies', table => {
       table.increments('id').primary();
 
-      // TODO: FK
       table
         .integer('authorId')
         .unsigned()
